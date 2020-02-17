@@ -9,6 +9,16 @@ Zotero.ZotFile.Wildcards = new function() {
     this.emptyCollectionPlaceholder = "EMPTY_COLLECTION_NAME";
 
     /*
+     * Abbreviation field using Zotero's getAbbreviation function
+     */
+    function abbreviateField(field) {
+        abbrv_obj = new Object();
+        Zotero.Cite.getAbbreviation("N/A", abbrv_obj, "default", "container-title", field);
+
+        return abbrv_obj["default"]["container-title"][field]
+    }
+    
+    /*
      * Performs a binary search that returns the index of the array before which the
      * search should be inserted into the array to maintain a sorted order.
      */
@@ -216,7 +226,8 @@ Zotero.ZotFile.Wildcards = new function() {
             "lastAuthor_lastInitial": authors[8],
             "lastAuthor_lastf": authors[9],
             "lastAuthor_initials": authors[10],
-            "collectionPaths": Zotero.ZotFile.Utils.getCollectionPathsOfItem(item)
+            "collectionPaths": Zotero.ZotFile.Utils.getCollectionPathsOfItem(item),
+            "citekey": Zotero.BetterBibTeX ? item.getField('citekey') : undefined
         };
         // define transform functions
         var itemtypeWildcard = function(item, map) {
@@ -256,6 +267,9 @@ Zotero.ZotFile.Wildcards = new function() {
                         var match = re.exec(output);
                         output = (match===null) ? output : match[group];
                     }
+                    if(obj.function=="abbreviate") {
+                        output = abbreviateField(output);
+                    }
                     // simple functions
                     if(obj.function=="toLowerCase")
                         output = output.toLowerCase();
@@ -263,6 +277,8 @@ Zotero.ZotFile.Wildcards = new function() {
                         output = output.toUpperCase();
                     if(obj.function=="trim")
                         output = output.trim();
+                    if(obj.function=="truncateTitle")
+                        output = truncateTitle(output);
                 }
             }
             // return
