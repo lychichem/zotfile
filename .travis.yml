@@ -5,3 +5,5 @@ deploy:
   api_key: $GITHUB_TOKEN
   file: zotfile-${RELEASE}-fx.xpi
   skip-cleanup: true
+  on:
+    branch: master
