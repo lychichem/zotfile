@@ -1,0 +1,7 @@
+language: node_js
+script: make
+deploy:
+  provider: releases
+  api_key: $GITHUB_TOKEN
+  file: zotfile-${RELEASE}-fx.xpi
+  skip-cleanup: true
