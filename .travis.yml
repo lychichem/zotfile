@@ -1,9 +1,12 @@
 language: node_js
 script: make
+after_success:
+  - export RELEASE=$(grep em:version install.rdf | head -n 1 | sed -e 's/ *<em:version>//' -e 's/<\/em:version>//')
+  - echo $RELEASE
 deploy:
   provider: releases
   api_key: $GITHUB_TOKEN
-  file: zotfile-${RELEASE}-fx.xpi
-  skip-cleanup: true
+  file: "zotfile-${RELEASE}-fx.xpi"
+  skip_cleanup: true
   on:
     tags: true
