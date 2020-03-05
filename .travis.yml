@@ -6,4 +6,4 @@ deploy:
   file: zotfile-${RELEASE}-fx.xpi
   skip-cleanup: true
   on:
-    branch: master
+    tags: true
