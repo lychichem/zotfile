@@ -9,7 +9,6 @@ zotfile.xpi: FORCE
 	zip -r $@ chrome chrome.manifest defaults install.rdf -x \*.DS_Store
 
 zotfile-%-fx.xpi: zotfile.xpi
-	mv $< $@
 
 Makefile.in: install.rdf
 	echo "all: zotfile-${RELEASE}-fx.xpi" > Makefile.in

@@ -3,7 +3,7 @@ script: make
 deploy:
   provider: releases
   api_key: $GITHUB_TOKEN
-  file: zotfile-${RELEASE}-fx.xpi
+  file: zotfile.xpi
   skip-cleanup: true
   on:
     tags: true
